@@ -1,35 +1,15 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-//import firebase from 'firebase';
+import firebase from 'firebase';
 import Login from './Login';
+import Loader from './Loader';
+import PeopleList from './PeopleList'
 
 export default class App extends Component {
-  /*componentWillMount() is invoked immediately before mounting occurs.
-    It is called before render(), therefore setting state synchronously in
-    this method will not trigger a re-rendering. Avoid introducing any 
-    side-effects or subscriptions in this method.
-
-    This is the only lifecycle hook called on server rendering. Generally, 
-    we recommend using the constructor() instead.
-    
-    componentWillMount() is a lifecycle method that allows to do things 
-    before and after a compoment is loaded, and in case we using 
-    componentWillMount, so this is doing stuff to our app before that 
-    particular component is mounting
-    */
-    
-  /*  componentWillMount() {
+  state = {loggedIn: null};
+  // a lifecycle method that allows to do things before a compoment is loaded    
+    componentWillMount() {
       firebase.initializeApp({
           apiKey: "AIzaSyCVY-6K3qTTASUyPbItVUBMp2Xf7kmKRPM",
           authDomain: "crmproject-39980.firebaseapp.com",
@@ -38,15 +18,33 @@ export default class App extends Component {
           storageBucket: "",
           messagingSenderId: "709315923322"
       });
-    }  */
+
+      firebase.auth().onAuthStateChanged((user) => {
+        if(user) {
+          this.setState({loggedIn: true });
+        }else{
+          this.setState({loggedIn: false});
+        }
+      });
+    }
+
+    renderInitialView() {
+      switch (this.state.loggedIn) {
+        case true:
+            return <PeopleList />; 
+        case false:
+            return <Login />;
+        default:
+          //sometimes, when firebase is still trying to find our users
+            return <Loader />;
+      }
+    }
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to the CRM!!!!!
-        </Text>
-        <Login />
-        
+      
+         {this.renderInitialView()}
+ 
       </View>
     );
   }
@@ -58,15 +56,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  }
 });
