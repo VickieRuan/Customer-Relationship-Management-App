@@ -9,6 +9,12 @@ const LoginButton = MKButton.coloredButton()
     .build();
 
 const styles = StyleSheet.create({
+    container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+    },
     form: {
         paddingBottom: 10,
         width: 200,
@@ -94,6 +100,7 @@ export default class Login extends Component {
       time I need to use one of the styles that i just coded */
     const { form, fieldStyles, loginButtonArea, errorMessage } = styles;
     return (
+     <View style={styles.container}>
       <View style={form}>
         <Text>
           Login or create an account
@@ -120,6 +127,7 @@ export default class Login extends Component {
             {this.renderLoader()}
         </View>
       </View>
+    </View>
     );
   }
 }

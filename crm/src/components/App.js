@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux'
 import Login from './Login';
 import Loader from './Loader';
-import PeopleList from './PeopleList';
+import Navigation from './Navigation';
 import reducers from '../reducers/PeopleReducer';
 
 //store holds the complete state tree of the app
@@ -36,7 +36,7 @@ export default class App extends Component {
   renderInitialView() {
     switch (this.state.loggedIn) {
       case true:
-        return <PeopleList />;
+        return <Navigation />;
       case false:
         return <Login />;
       default:
@@ -47,20 +47,11 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <View style={styles.container}>
+     
           {this.renderInitialView()}
-        </View>
+ 
       </Provider>
     );
   }
 }
 //end of App class
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});
