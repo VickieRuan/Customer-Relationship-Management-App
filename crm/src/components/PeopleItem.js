@@ -40,7 +40,7 @@ const PeopleItem = (props) => {
         >
             <View style={[theme.cardStyle, styles.card]}>
                 <Image
-                    source={{ uri: '/Users/vickie/Desktop/CRM/crm/src/images/background.jpg' }}
+                    source={{ uri: '/Users/vickie/Desktop/git/Customer-Relationship-Management-App/crm/src/images/background.png' }}
                     style={[theme.cardImageStyle, styles.image]}
                 />
                 <Icon
@@ -56,5 +56,5 @@ const PeopleItem = (props) => {
 };
 //connect null for our props, so when we connect redux to this particular component
 //we don't need to map our state to the props b/c we already have our props from the 
-//PeopleList component
+
 export default connect(null, actions)(PeopleItem);

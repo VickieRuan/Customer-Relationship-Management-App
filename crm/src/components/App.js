@@ -36,20 +36,20 @@ export default class App extends Component {
   renderInitialView() {
     switch (this.state.loggedIn) {
       case true:
-        return <Navigation />;
+        return <Navigation />
       case false:
         return <Login />;
       default:
-        //sometimes, when firebase is still trying to find our users
         return <Loader size="large" />;
     }
   }
+  
   render() {
     return (
       <Provider store={store}>
-     
-          {this.renderInitialView()}
- 
+
+        {this.renderInitialView()}
+
       </Provider>
     );
   }

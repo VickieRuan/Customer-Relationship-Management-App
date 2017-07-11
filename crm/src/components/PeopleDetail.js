@@ -80,7 +80,7 @@ class PeopleDetail extends Component {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={[theme.cardStyle, styles.card]}>
                     <Image
-                        source={{ uri: '/Users/vickie/Desktop/CRM/crm/src/images/background.jpg' }}
+                        source={require('../images/background.png')}
                         style={[theme.cardImageStyle, styles.image]}
                     />
                     <EvilIcon name={'user'} size={100} style={styles.icon} />
