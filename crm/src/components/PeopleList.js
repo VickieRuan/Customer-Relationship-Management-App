@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, ListView } from 'react-native';
 import { connect } from 'react-redux';
 import PeopleItem from './PeopleItem';
 import Icon from 'react-native-vector-icons/EvilIcons';
+import PeopleDetail from './PeopleDetail'
 
 
 const styles = StyleSheet.create({
@@ -26,36 +27,44 @@ class PeopleList extends Component {
                 />
             ),        
     } 
-  //execute this function before the component mounts
-  componentWillMount() {
-    //ds will hold the amount of rows that is in our ListView 
+
+  renderInitialView() {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
     });
-    //update data in dataSource
     this.dataSource = ds.cloneWithRows(this.props.people);
 
+    if (this.props.detailView === true) {
+      return (
+        <PeopleDetail />
+      );
+    } else {
+      return (
+        <ListView 
+          enableEmptySections={true}
+          dataSource={this.dataSource}
+          renderRow={(rowData) => 
+            <PeopleItem people={rowData} />
+          }
+        />
+      );
+    }
   }
   render() {
     return (
       <View style={styles.container}>
-        <ListView
-          //allow us to pass data that isn't rendered on the View
-          enableEmptySections={true}
-          dataSource={this.dataSource}
-          //ListView renders each row passing the rowData  
-          renderRow={(rowData) =>
-            <PeopleItem people={rowData} />
-          }
-        />
+        {this.renderInitialView()}
       </View>
     );
   }
 }
-//passing the state to it
+
 const mapStateToProps = state => {
-  return { people: state.people };
+  return { 
+    people: state.people,
+    detailView: state.detailView,
+ };
 };
- 
+
 export default connect(mapStateToProps)(PeopleList);
 //exporting PeopleList but also connecting the state and passing the props to this component
