@@ -1,23 +1,64 @@
-import people from './people.json';
-
 const initialState = {
-    people,
+    people: [],
     detailView: false,
     personSelected: null,
+    first_name: '',
+    last_name: '',
+    phone: '',
+    email: '',
+    company: '',
+    project: '',
+    notes: '',
+    loadingPeople: false,
 };
-//accept initialState as default if there is no state
-//so if there is a current state, it will use that state
-//otherwise it will load the constant that we just created
+
 export default (state = initialState, action) => {
     switch (action.type) {
+        case 'INITIAL_FETCH':
+            return {
+                ...state,
+                people: action.payload,
+            }
+
         case 'SELECTED_PERSON':
             return {
-                ...state, //current state and combine with others
+                ...state,
                 detailView: true,
                 personSelected: action.payload
             }
             
         case 'NONE_SELECTED':
+            return {
+                ...state,
+                detailView: false,
+                personSelected: null,
+            }
+            
+        case 'FORM_UPDATE':
+            return {
+                ...state,
+                [action.payload.prop]: action.payload.value
+            };
+        
+        case 'NEW_CONTACT':
+            return {
+                ...state,
+                first_name: '',
+                last_name: '',
+                phone: '',
+                email: '',
+                company: '',
+                project: '',
+                notes: '',
+            }
+        
+        case 'ADD_PERSON':
+            return {
+                ...state,
+                ...action.newPerson
+            };
+        
+        case 'DELETE_CONTACT':
             return {
                 ...state,
                 detailView: false,

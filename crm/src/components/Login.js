@@ -53,7 +53,7 @@ export default class Login extends Component {
       this.setState({error:'', loading: true});
 
       firebase.auth().signInWithEmailAndPassword(email,password)
-        //promisesx
+        //promises
         //if the authoriazation is successful, then
         //otherwise catch the error, and then we will do another firebase method
         //if firebase is able to sign in, then go ahead and call AuthSuccess,
